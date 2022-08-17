@@ -1,4 +1,4 @@
-# jianghujs-1table-file
+# jianghujs-1table-crud-file
 
 ## 配置
 
@@ -10,7 +10,7 @@
    port: 3306,
    user: 'root',
    password: '123456',
-   database: 'jianghujs-1table-file'
+   database: 'jianghujs-1table-crud-file'
    ```
 4. 启动 npm run dev
    
@@ -18,9 +18,9 @@
 
 ```sql
 # 数据库初始化
-create database `jianghujs-1table-file` default character set utf8mb4 collate utf8mb4_bin;
-use jianghujs-1table-file;
-# 运行 sql/jianghujs-1table-file.sql 文件
+create database `jianghujs-1table-crud-file` default character set utf8mb4 collate utf8mb4_bin;
+use jianghujs-1table-crud-file;
+# 运行 sql/jianghujs-1table-crud-file.sql 文件
 ```
 
 ## 测试账号 & 测试环境

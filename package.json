@@ -1,5 +1,5 @@
 {
-  "name": "jianghujs-1table-file",
+  "name": "jianghujs-1table-crud-file",
   "version": "1.0.0",
   "description": "",
   "private": true,
@@ -25,8 +25,8 @@
     "node": ">=10.0.0"
   },
   "scripts": {
-    "start": "egg-scripts start --daemon --port=7006 --title=jianghujs-1table-file",
-    "stop": "egg-scripts stop --title=jianghujs-1table-file",
+    "start": "egg-scripts start --daemon --port=7006 --title=jianghujs-1table-crud-file",
+    "stop": "egg-scripts stop --title=jianghujs-1table-crud-file",
     "dev": "egg-bin dev --port=7006",
     "debug": "egg-bin debug",
     "test": "npm run lint -- --fix && npm run test-local",
