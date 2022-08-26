@@ -59,8 +59,8 @@
                   class="elevation-0 mt-0 mb-xs-4 flex-fill d-flex flex-column">
                   
       <template v-slot:item.filePath="{ item }">
-        <v-btn small class="mr-2 primary" v-if="item.filePath" @click="filePreview({item})">查看</v-btn>
-        <a>{{item.filePath}}</a>
+        <!-- <v-btn small class="mr-2 primary" v-if="item.filePath" @click="doUiAction('filePreview', {item})">查看</v-btn> -->
+        <a v-if="item.filePath" @click="doUiAction('filePreview', {item})">{{item.filePath}}</a>
       </template>
       <template v-slot:item.action="{ item }">
         <v-btn small class=" success" @click="doUiAction('startUpdateItem', {item})">修改</v-btn>
@@ -133,8 +133,8 @@
        
     </v-row>
     <v-row class="justify-end pr-6">
-      <v-btn color="success" small @click="doUiAction('createItem')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mb-2': isMobile, 'mr-4': isMobile}">新增</v-btn>
-      <v-btn class="ml-2" small @click="isAddDrawerShow = false" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
+      <v-btn color="success" @click="doUiAction('createItem')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mb-2': isMobile, 'mr-4': isMobile}">新增</v-btn>
+      <v-btn class="ml-2 mr-2" @click="isAddDrawerShow = false" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
     </v-row>
   </v-form>
 </v-navigation-drawer>
@@ -219,8 +219,8 @@
 <!--      </v-col>-->
     </v-row>
     <v-row class="justify-end pr-6">
-      <v-btn color="success" small @click="doUiAction('updateItem')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mb-2': isMobile, 'mr-4': isMobile}">保存</v-btn>
-      <v-btn class="ml-2" small @click="isEditDrawerShow = false" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
+      <v-btn color="success" @click="doUiAction('updateItem')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mb-2': isMobile, 'mr-4': isMobile}">保存</v-btn>
+      <v-btn class="ml-2 mr-2" @click="isEditDrawerShow = false" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
     </v-row>
   </v-form>
 </v-navigation-drawer>
@@ -249,7 +249,6 @@ new Vue({
   el: '#app',
   template: '#app-template',
   vuetify: new Vuetify(),
-  mixins: [window.jianghuUiActionMixins],
   data: () => ({
     // 表格相关数据
     isFormValid: true,
@@ -306,7 +305,53 @@ new Vue({
   },
   mounted() {},
   methods: {
+    async doUiAction(actionId, actionData) {
+        switch (actionId) {
+          case 'refreshTableData':
+            await this.refreshTableData(actionData);
+            break;
+          case 'startCreateItem':
+            await this.clearItemData(actionData);
+            await this.openCreateItemDialog(actionData);
+            break;
+          case 'createItem':
+            await this.confirmCreateItemDialog(actionData);
+            await this.doCreateItem(actionData);
+            await this.refreshTableData(actionData);
+            await this.closeCreateDrawerShow(actionData);
+            break;
+          case 'startUpdateItem':
+            await this.prepareItemData(actionData);
+            await this.openUpdateDialog(actionData);
+            break;
+          case 'updateItem':
+            await this.confirmUpdateItemDialog(actionData);
+            await this.doUpdateItem(actionData);
+            await this.refreshTableData(actionData);
+            await this.closeUpdateDrawerShow(actionData);
+            break;
+          case 'deleteItem':
+            await this.confirmDeleteItemDialog(actionData);
+            await this.doDeleteItem(actionData);
+            await this.refreshTableData(actionData);
+            break;
+          case 'filePreview':
+            await this.filePreview(actionData);
+            break;
+          case 'downloadFileByStream':
+            await this.downloadFileByStream(actionData);
+            break;
+          default:
+            console.error("[doUiAction] actionId not find", { actionId });
+            break;
+        }
+    },
     // =================================uiAction 公共方法 start ======================================
+    /** 
+     * uiActionId:  refreshTableData
+     * description: ✅获取表格数据
+     * main:   [{"function":"refreshTableData"}]
+    */
     async refreshTableData() {
       this.isTableLoading = true;
       const serverSearchInput = _.pickBy(this.serverSearchInput, value=> !!value);
@@ -329,14 +374,8 @@ new Vue({
     // =================================uiAction 公共方法 end ======================================
 
     /** 
-     * uiActionId:  refreshTableData
-     * description: ✅获取表格数据
-     * main:   [{"function":"refreshTableData"}]
-    */
-
-    /** 
      * uiActionId:  startCreateItem
-     * description: ✅获取表格数据
+     * description: ✅开始新增
      * main:   [{"function":"clearItemData"},{"function":"openCreateItemDialog"}]
     */
     async clearItemData() {
@@ -348,13 +387,15 @@ new Vue({
 
     /** 
      * uiActionId:  createItem
-     * description: ✅获取表格数据
+     * description: ✅新增
      * before: [{"function":"confirmCreateItemDialog"}]
      * main:   [{"function":"doCreateItem"},{"function":"refreshTableData"}]
-     * after:  [{"function":"closeDrawerShow"}]
+     * after:  [{"function":"closeCreateDrawerShow"}]
     */
     async confirmCreateItemDialog() {
-      return window.confirmDialog({title: '新增', content: '确定新增吗？'})
+      if (await window.confirmDialog({title: "新增", content: "确定新增吗？"}) === false) {
+          throw new Error("[confirmCreateFormDialog] 否");
+      }
     },
     async doCreateItem() {
       const { id, ...createData } = this.addItem;
@@ -385,14 +426,13 @@ new Vue({
       }
       
     },
-    async closeDrawerShow() {
-      this.isEditDrawerShow = false;
+    async closeCreateDrawerShow() {
       this.isAddDrawerShow = false;
     },
 
     /** 
      * uiActionId:  startUpdateItem
-     * description: ✅获取表格数据
+     * description: ✅开始更新
      * main:   [{"function":"prepareItemData"},{"function":"openUpdateDialog"}]
     */
     async prepareItemData({item}) {
@@ -403,13 +443,15 @@ new Vue({
     },
     /** 
      * uiActionId:  updateItem
-     * description: ✅获取表格数据
+     * description: ✅更新
      * before: [{"function":"confirmUpdateItemDialog"}]
      * main:   [{"function":"doUpdateItem"},{"function":"refreshTableData"}]
-     * after:  [{"function":"closeDrawerShow"}]
+     * after:  [{"function":"closeUpdateDrawerShow"}]
     */
     async confirmUpdateItemDialog() {
-      return window.confirmDialog({title: '修改', content: '确定修改吗？'});
+      if (await window.confirmDialog({title: "修改", content: "确定修改吗？"}) === false) {
+          throw new Error("[confirmUpdateItemDialog] 否");
+      }
     },
     async doUpdateItem() {
       const { id, ...data } = this.editItem;
@@ -426,15 +468,20 @@ new Vue({
       })
       await window.vtoast.success("修改数据成功");
     },
+    async closeUpdateDrawerShow() {
+      this.isEditDrawerShow = false;
+    },
 
     /** 
      * uiActionId:  deleteItem
-     * description: ✅获取表格数据
+     * description: ✅删除
      * before: [{"function":"confirmDeleteItemDialog"}]
      * main:   [{"function":"doDeleteItem"},{"function":"refreshTableData"}]
     */
     async confirmDeleteItemDialog() {
-      return window.confirmDialog({title: '删除', content: '确定删除吗？'});
+      if (await window.confirmDialog({title: "删除", content: "确定删除吗？"}) === false) {
+          throw new Error("[confirmDeleteItemDialog] 否");
+      }
     },
     async doDeleteItem({item}) {
       const { id } = item;
@@ -451,6 +498,8 @@ new Vue({
       });
       await window.vtoast.success("删除数据成功");
     },
+
+    // 文件预览
     filePreview({ item }) {
       this.editItem = item;
       if (!item.filePath) return;
