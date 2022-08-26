@@ -57,7 +57,7 @@
                   :loading="isTableLoading"
                   checkbox-color="success"
                   class="elevation-0 mt-0 mb-xs-4 flex-fill d-flex flex-column">
-                  
+
       <template v-slot:item.filePath="{ item }">
         <!-- <v-btn small class="mr-2 primary" v-if="item.filePath" @click="doUiAction('filePreview', {item})">查看</v-btn> -->
         <a v-if="item.filePath" @click="doUiAction('filePreview', {item})">{{item.filePath}}</a>
@@ -85,52 +85,52 @@
         <span class="inputLabel">文件</span>
         <v-file-input v-model="inputFile" class="cus-v-input mr-2" dense filled single-line chips label="请选择文件" ></v-file-input>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">身高</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['bodyHeight']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">班级ID</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['classId']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">出生日期</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['dateOfBirth']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">性别</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['gender']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">年级</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['level']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生名字</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['name']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">备注</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['remarks']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生ID</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['studentId']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生状态</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['studentStatus']"></v-text-field>
       </v-col>
-       
+
     </v-row>
     <v-row class="justify-end pr-6">
       <v-btn color="success" @click="doUiAction('createItem')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mb-2': isMobile, 'mr-4': isMobile}">新增</v-btn>
@@ -151,52 +151,52 @@
       </v-btn>
     </v-row>
     <v-row :class="{'px-10': !isMobile, 'px-3': isMobile, 'pb-7': isMobile}">
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">身高</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['bodyHeight']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">班级ID</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['classId']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">出生日期</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['dateOfBirth']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">性别</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['gender']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">年级</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['level']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生名字</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['name']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">备注</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['remarks']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生ID</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['studentId']"></v-text-field>
       </v-col>
-       
+
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生状态</span>
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['studentStatus']"></v-text-field>
       </v-col>
-       
+
 <!--      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">-->
 <!--        &lt;!&ndash; 必填字段样式 demo :rules="requireRules" &ndash;&gt;-->
 <!--            <span class="inputLabel">学生ID</span>-->
@@ -251,6 +251,7 @@ new Vue({
   vuetify: new Vuetify(),
   data: () => ({
     // 表格相关数据
+    isMobile: window.innerWidth < 600,
     isFormValid: true,
     requireRules: [
       v => !!v || 'This is required',
@@ -266,20 +267,21 @@ new Vue({
     },
     searchInput: null,
     isTableLoading: true,
+    tableData: [],
     tableDataFromBackend: [],
     headers: [
       {text: "ID", value: "id", width: 120, class: 'fixed', cellClass: 'fixed'},
       {text: "文件", value: "filePath", width: 250},
-       
-      {text: "身高", value: "bodyHeight", width: 120}, 
-      {text: "班级ID", value: "classId", width: 120}, 
-      {text: "出生日期", value: "dateOfBirth", width: 120}, 
-      {text: "性别", value: "gender", width: 120}, 
-      {text: "年级", value: "level", width: 120}, 
-      {text: "学生名字", value: "name", width: 120}, 
-      {text: "备注", value: "remarks", width: 120}, 
-      {text: "学生ID", value: "studentId", width: 120}, 
-      {text: "学生状态", value: "studentStatus", width: 120}, 
+
+      {text: "身高", value: "bodyHeight", width: 120},
+      {text: "班级ID", value: "classId", width: 120},
+      {text: "出生日期", value: "dateOfBirth", width: 120},
+      {text: "性别", value: "gender", width: 120},
+      {text: "年级", value: "level", width: 120},
+      {text: "学生名字", value: "name", width: 120},
+      {text: "备注", value: "remarks", width: 120},
+      {text: "学生ID", value: "studentId", width: 120},
+      {text: "学生状态", value: "studentStatus", width: 120},
       {text: "操作者", value: "operationByUser", width: 120},
       {text: "操作时间", value: "operationAt", width: 250},
       {text: '操作', value: 'action', align: 'center', sortable: false, width: 200, class: 'fixed', cellClass: 'fixed'},
@@ -291,14 +293,6 @@ new Vue({
     addItem: {},
     previewPrefix: `/<$ ctx.app.config.appId $>/upload`,
   }),
-  computed: {
-    isMobile() {
-      return window.innerWidth < 600;
-    },
-    tableData() {
-      return this.tableDataFromBackend;
-    }
-  },
   watch: {},
   async created() {
     await this.doUiAction('refreshTableData');
@@ -347,7 +341,7 @@ new Vue({
         }
     },
     // =================================uiAction 公共方法 start ======================================
-    /** 
+    /**
      * uiActionId:  refreshTableData
      * description: ✅获取表格数据
      * main:   [{"function":"refreshTableData"}]
@@ -369,11 +363,12 @@ new Vue({
       });
 
       this.tableDataFromBackend = rows;
+      this.tableData = rows;
       this.isTableLoading = false;
     },
     // =================================uiAction 公共方法 end ======================================
 
-    /** 
+    /**
      * uiActionId:  startCreateItem
      * description: ✅开始新增
      * main:   [{"function":"clearItemData"},{"function":"openCreateItemDialog"}]
@@ -385,7 +380,7 @@ new Vue({
       this.isAddDrawerShow = true;
     },
 
-    /** 
+    /**
      * uiActionId:  createItem
      * description: ✅新增
      * before: [{"function":"confirmCreateItemDialog"}]
@@ -401,15 +396,15 @@ new Vue({
       const { id, ...createData } = this.addItem;
       await window.vtoast.loading("新增数据");
       const _this = this;
-      const {data: {status, appData: {resultData: {downloadPath}}} } = await window.jianghuAxios.httpUploadByStream({ file: this.inputFile, fileDirectory: 'testFile', fileDesc: '', 
+      const {data: {status, appData: {resultData: {downloadPath}}} } = await window.jianghuAxios.httpUploadByStream({ file: this.inputFile, fileDirectory: 'testFile', fileDesc: '',
           onProgress: (total, loaded) => {
             let progress = Number((loaded * 100 / total).toFixed(2))
             window.vtoast.loading(`文件上传进度${progress}%`);
             if (progress === 100) {
               window.vtoast.success('文件上传成功');
             }
-          }  
-        }) 
+          }
+        })
       if (status === 'success') {
         await window.jianghuAxios({
           data: {
@@ -424,13 +419,13 @@ new Vue({
       } else {
         await window.vtoast.fail("文件上传失败");
       }
-      
+
     },
     async closeCreateDrawerShow() {
       this.isAddDrawerShow = false;
     },
 
-    /** 
+    /**
      * uiActionId:  startUpdateItem
      * description: ✅开始更新
      * main:   [{"function":"prepareItemData"},{"function":"openUpdateDialog"}]
@@ -441,7 +436,7 @@ new Vue({
     async openUpdateDialog() {
       this.isEditDrawerShow = true;
     },
-    /** 
+    /**
      * uiActionId:  updateItem
      * description: ✅更新
      * before: [{"function":"confirmUpdateItemDialog"}]
@@ -472,7 +467,7 @@ new Vue({
       this.isEditDrawerShow = false;
     },
 
-    /** 
+    /**
      * uiActionId:  deleteItem
      * description: ✅删除
      * before: [{"function":"confirmDeleteItemDialog"}]
@@ -513,7 +508,7 @@ new Vue({
       }
       this.overlay = true;
     },
-    
+
     /**
      * uiActionId:  downloadFileByStream
      * description: ✅下载文件
