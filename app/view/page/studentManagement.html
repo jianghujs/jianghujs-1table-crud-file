@@ -396,8 +396,8 @@ new Vue({
       const { id, ...createData } = this.addItem;
       await window.vtoast.loading("新增数据");
       const fileType = '学生文件';
-      // 可以不传
-      const filenameStorage = this.inputFile.name;
+      // const filenameStorage = this.inputFile.name;
+      const filenameStorage = null;
       const _this = this;
       const {data: {status, appData: {resultData: {downloadPath}}} } = await window.jianghuAxios.httpUploadByStream({ file: this.inputFile, fileDirectory: 'testFile', fileDesc: '', fileType, filenameStorage,
           onProgress: (total, loaded) => {
