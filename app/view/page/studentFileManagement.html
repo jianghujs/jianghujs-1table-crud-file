@@ -57,10 +57,9 @@
                   :loading="isTableLoading"
                   checkbox-color="success"
                   class="elevation-0 mt-0 mb-xs-4 flex-fill d-flex flex-column">
-
-      <template v-slot:item.filePath="{ item }">
-        <!-- <v-btn small class="mr-2 primary" v-if="item.filePath" @click="doUiAction('filePreview', {item})">查看</v-btn> -->
-        <a v-if="item.filePath" @click="doUiAction('filePreview', {item})">{{item.filePath}}</a>
+      <template v-slot:item.downloadPath="{ item }">
+        <v-btn small class="mr-2" primary @click="doUiAction('previewFile', { item })">预览</v-btn>
+        <a href="javascript:;" @click="doUiAction('downloadFile', { item })">{{ item.downloadPath }}</a>
       </template>
       <template v-slot:item.action="{ item }">
         <v-btn small class=" success" @click="doUiAction('startUpdateItem', {item})">修改</v-btn>
@@ -76,44 +75,24 @@
     <v-row class="pt-8">
       <span class="title pa-6" :class="{'pl-12': !isMobile, 'pl-6': isMobile}">新增信息</span>
       <v-spacer></v-spacer>
-      <v-btn class="mt-6 elevation-0" :class="{'mr-16': !isMobile, 'mr-8': isMobile}" fab x-small @click="isAddDrawerShow = false">
+      <v-btn class="mt-6 elevation-0" :class="{'mr-16': !isMobile, 'mr-8': isMobile}" fab x-small @click="doUiAction('closeCreateDrawerShow')">
         <v-icon dark>mdi-close</v-icon>
       </v-btn>
     </v-row>
     <v-row :class="{'px-10': !isMobile, 'px-3': isMobile, 'pb-7': isMobile}">
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">文件</span>
-        <v-file-input v-model="inputFile" class="cus-v-input mr-2" dense filled single-line chips label="请选择文件" ></v-file-input>
+        <v-file-input v-model="addInputFile" class="cus-v-input mr-2" dense filled single-line chips label="请选择文件" ></v-file-input>
       </v-col>
 
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">身高</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['bodyHeight']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">班级ID</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['classId']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">出生日期</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['dateOfBirth']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">性别</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['gender']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">年级</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['level']"></v-text-field>
+        <span class="inputLabel">文档类型</span>
+        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['docType']"></v-text-field>
       </v-col>
 
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生名字</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['name']"></v-text-field>
+        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['studentName']"></v-text-field>
       </v-col>
 
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
@@ -121,20 +100,10 @@
         <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['remarks']"></v-text-field>
       </v-col>
 
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">学生ID</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['studentId']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">学生状态</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="addItem['studentStatus']"></v-text-field>
-      </v-col>
-
     </v-row>
     <v-row class="justify-end pr-6">
       <v-btn color="success" @click="doUiAction('createItem')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mb-2': isMobile, 'mr-4': isMobile}">新增</v-btn>
-      <v-btn class="ml-2 mr-2" @click="isAddDrawerShow = false" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
+      <v-btn class="ml-2 mr-2" @click="doUiAction('closeCreateDrawerShow')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
     </v-row>
   </v-form>
 </v-navigation-drawer>
@@ -146,40 +115,25 @@
     <v-row class="pt-8">
       <span class="title pa-6" :class="{'pl-12': !isMobile, 'pl-6': isMobile}">编辑信息</span>
       <v-spacer></v-spacer>
-      <v-btn class="mt-6 elevation-0" :class="{'mr-16': !isMobile, 'mr-8': isMobile}" fab x-small @click="isEditDrawerShow = false">
+      <v-btn class="mt-6 elevation-0" :class="{'mr-16': !isMobile, 'mr-8': isMobile}" fab x-small @click="doUiAction('closeUpdateDrawerShow')">
         <v-icon dark>mdi-close</v-icon>
       </v-btn>
     </v-row>
     <v-row :class="{'px-10': !isMobile, 'px-3': isMobile, 'pb-7': isMobile}">
 
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">身高</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['bodyHeight']"></v-text-field>
+        <span class="inputLabel">文件</span>
+        <v-file-input v-model="editInputFile" class="cus-v-input mr-2" dense filled single-line chips label="请选择文件" ></v-file-input>
       </v-col>
 
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">班级ID</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['classId']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">出生日期</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['dateOfBirth']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">性别</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['gender']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">年级</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['level']"></v-text-field>
+        <span class="inputLabel">文档类型</span>
+        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['docType']"></v-text-field>
       </v-col>
 
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
         <span class="inputLabel">学生名字</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['name']"></v-text-field>
+        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['studentName']"></v-text-field>
       </v-col>
 
       <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
@@ -187,57 +141,28 @@
         <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['remarks']"></v-text-field>
       </v-col>
 
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">学生ID</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['studentId']"></v-text-field>
-      </v-col>
-
-      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">
-        <span class="inputLabel">学生状态</span>
-        <v-text-field class="cus-v-input " dense filled single-line v-model="editItem['studentStatus']"></v-text-field>
-      </v-col>
-
-<!--      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">-->
-<!--        &lt;!&ndash; 必填字段样式 demo :rules="requireRules" &ndash;&gt;-->
-<!--            <span class="inputLabel">学生ID</span>-->
-<!--        <v-text-field class="cus-v-input " dense filled single-line label="学生ID" v-model="editItem.studentId" :rules="requireRules"></v-text-field>-->
-<!--      </v-col>-->
-<!--      &lt;!&ndash; select 字段 demo &ndash;&gt;-->
-<!--      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">-->
-<!--            <span class="inputLabel">班级ID</span>-->
-<!--        <v-select class="cus-v-input " dense filled single-line clearable label="班级ID" v-model="editItem.classId" :items="constantCollection.classId"></v-select>-->
-<!--      </v-col>-->
-<!--      &lt;!&ndash; 日期选择 demo &ndash;&gt;-->
-<!--      <v-col cols="12" sm="12" md="4" xl="3" :class="{'pa-0': isMobile, 'px-4': isMobile, 'pt-6': isMobile}">-->
-<!--        <span class="inputLabel">出生日期</span>-->
-<!--        <v-menu class="cus-v-input " offset-y max-width="290">-->
-<!--          <template v-slot:activator="{ on, attrs }">-->
-<!--            <v-text-field class="cus-v-input " dense filled single-line v-on="on" label="出生日期" v-model="editItem.dateOfBirth"></v-text-field>-->
-<!--          </template>-->
-<!--          <v-date-picker color="success" elevation="20" v-model="editItem.dateOfBirth"></v-date-picker>-->
-<!--        </v-menu>-->
-<!--      </v-col>-->
     </v-row>
     <v-row class="justify-end pr-6">
       <v-btn color="success" @click="doUiAction('updateItem')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mb-2': isMobile, 'mr-4': isMobile}">保存</v-btn>
-      <v-btn class="ml-2 mr-2" @click="isEditDrawerShow = false" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
+      <v-btn class="ml-2 mr-2" @click="doUiAction('closeUpdateDrawerShow')" :style="{width: isMobile ? 'calc(100% - 45px)' : '200px'}" :class="{'mr-4': isMobile}">取消</v-btn>
     </v-row>
   </v-form>
 </v-navigation-drawer>
 
-<v-overlay :value="overlay" @click="overlay = false" :opacity="0.85"  style="z-index: 9999;">
-  <v-icon style="position: fixed; right: 30px; top: 30px;" large color="white"
-    @click="overlay = false" :color="fileType === 'pdf' ? '#ccc' : ''">
-    mdi-close-circle
-  </v-icon>
-  <v-icon style="position: fixed; right: 80px; top: 30px;" large color="white"
-    @click="doUiAction('downloadFileByStream', {item: editItem})" :color="fileType === 'pdf' ? '#ccc' : ''">
-    mdi-download
-  </v-icon>
-  <iframe v-if="fileType === 'pdf'" id="pdfPlayer" :src="fileSrc" frameborder="0"
-   style="width: 100vw; height: 100vh; padding: 50px 0 0 0;"></iframe>
-  <v-img v-else max-height="800" max-width="800" :src="fileSrc"></v-img>
-</v-overlay>
+  <!-- 文件预览 -->
+  <v-overlay :value="previewOverlay" @click="previewOverlay = false" :opacity="0.85">
+    <v-icon style="position: fixed; right: 10px; top: 5px; z-index: 50000" large color="white"
+      @click="previewOverlay = false">
+      mdi-close-circle
+    </v-icon>
+    <v-icon style="position: fixed; right: 50px; top: 5px; z-index: 50000" large color="white"
+      @click="doUiAction('downloadPreviewFile')">
+      mdi-download
+    </v-icon>
+    <iframe v-if="previewFileType === 'pdf'" :src="'/<$ ctx.app.config.duoxingBot.serverAppId $>/public/pdf/web/viewer.html?file=' + previewFileUrl" frameborder="0"
+      style="width: 100vw; height: 100vh; padding: 50px 0 0 0;"></iframe>  
+    <v-img v-if="previewFileType === 'img'" max-height="80vw" max-width="100vw"  :src="previewFileUrl"></v-img>
+  </v-overlay>
 </jh-layout-v3>
 
 {% endblock %}
@@ -271,17 +196,12 @@ new Vue({
     tableDataFromBackend: [],
     headers: [
       {text: "ID", value: "id", width: 120, class: 'fixed', cellClass: 'fixed'},
-      {text: "文件", value: "filePath", width: 250},
-
-      {text: "身高", value: "bodyHeight", width: 120},
-      {text: "班级ID", value: "classId", width: 120},
-      {text: "出生日期", value: "dateOfBirth", width: 120},
-      {text: "性别", value: "gender", width: 120},
-      {text: "年级", value: "level", width: 120},
-      {text: "学生名字", value: "name", width: 120},
+      {text: "文件名", value: "filename", width: 120}, 
+      {text: "文件路径", value: "downloadPath", width: 400},
+      {text: "文件大小/KB", value: "binarySize", width: 120}, 
+      {text: "文档类型", value: "docType", width: 120}, 
+      {text: "学生名字", value: "studentName", width: 120},
       {text: "备注", value: "remarks", width: 120},
-      {text: "学生ID", value: "studentId", width: 120},
-      {text: "学生状态", value: "studentStatus", width: 120},
       {text: "操作者", value: "operationByUser", width: 120},
       {text: "操作时间", value: "operationAt", width: 250},
       {text: '操作', value: 'action', align: 'center', sortable: false, width: 200, class: 'fixed', cellClass: 'fixed'},
@@ -289,9 +209,16 @@ new Vue({
     isEditDrawerShow: false,
     editItem: {},
     isAddDrawerShow: false,
-    inputFile: null,
+    addInputFile: null,
+    editInputFile: null,
     addItem: {},
     previewPrefix: `/<$ ctx.app.config.appId $>/upload`,
+
+    previewOverlay: false,
+    previewFileUrl: null,
+    previewFileBase64: '',
+    previewFilename: '',
+    previewFileType: '',
   }),
   watch: {},
   async created() {
@@ -307,6 +234,12 @@ new Vue({
           case 'startCreateItem':
             await this.clearItemData(uiActionData);
             await this.openCreateItemDialog(uiActionData);
+            break;
+          case 'closeCreateDrawerShow':
+            await this.closeCreateDrawerShow(uiActionData);
+            break;
+          case 'closeUpdateDrawerShow':
+            await this.closeUpdateDrawerShow(uiActionData);
             break;
           case 'createItem':
             await this.confirmCreateItemDialog(uiActionData);
@@ -329,11 +262,14 @@ new Vue({
             await this.doDeleteItem(uiActionData);
             await this.refreshTableData(uiActionData);
             break;
-          case 'filePreview':
-            await this.filePreview(uiActionData);
+          case 'previewFile':
+            await this.previewFile(uiActionData);
             break;
-          case 'downloadFileByStream':
-            await this.downloadFileByStream(uiActionData);
+          case 'downloadFile':
+            await this.downloadFile(uiActionData);
+            break;
+          case 'downloadPreviewFile':
+            await this.downloadPreviewFile(uiActionData);
             break;
           default:
             console.error("[doUiAction] uiActionId not find", { uiActionId });
@@ -352,7 +288,7 @@ new Vue({
       const { data: { appData: { rows } } } = await window.jianghuAxios({
         data: {
           appData: {
-            pageId: 'studentManagement',
+            pageId: 'studentFileManagement',
             actionId: 'selectItemList',
             actionData: {},
             where: {},
@@ -393,13 +329,10 @@ new Vue({
       }
     },
     async doCreateItem() {
-      const { id, ...createData } = this.addItem;
-      await window.vtoast.loading("新增数据");
+      const { docType, studentName, remarks } = this.addItem;
       const fileType = '学生文件';
-      // const filenameStorage = this.inputFile.name;
-      const filenameStorage = null;
       const _this = this;
-      const {data: {status, appData: {resultData: {downloadPath}}} } = await window.jianghuAxios.httpUploadByStream({ file: this.inputFile, fileDirectory: 'testFile', fileDesc: '', fileType, filenameStorage,
+      const {data: {status, appData: {resultData: { filename, downloadPath, binarySize }}} } = await window.jianghuAxios.httpUploadByStream({ file: this.addInputFile, fileDirectory: 'testFile',
           onProgress: (total, loaded) => {
             let progress = Number((loaded * 100 / total).toFixed(2))
             window.vtoast.loading(`文件上传进度${progress}%`);
@@ -409,12 +342,13 @@ new Vue({
           }
         })
       if (status === 'success') {
+        await window.vtoast.loading("新增数据");
         await window.jianghuAxios({
           data: {
             appData: {
-              pageId: 'studentManagement',
+              pageId: 'studentFileManagement',
               actionId: 'insertItem',
-              actionData: {...createData, filePath: downloadPath}
+              actionData: { docType, studentName, remarks, filename, downloadPath, binarySize}
             }
           }
         })
@@ -426,6 +360,7 @@ new Vue({
     },
     async closeCreateDrawerShow() {
       this.isAddDrawerShow = false;
+      this.addInputFile = null;
     },
 
     /**
@@ -452,15 +387,31 @@ new Vue({
       }
     },
     async doUpdateItem() {
-      const { id, ...data } = this.editItem;
+      const { id, docType, studentName, remarks } = this.editItem;
+      const updateParam = { docType, studentName, remarks };
+      if (this.editInputFile) {
+        const {data: {status, appData: {resultData: { filename, downloadPath, binarySize }}} } = await window.jianghuAxios.httpUploadByStream({ file: this.editInputFile, fileDirectory: 'testFile',
+          onProgress: (total, loaded) => {
+            let progress = Number((loaded * 100 / total).toFixed(2))
+            window.vtoast.loading(`文件上传进度${progress}%`);
+            if (progress === 100) {
+              window.vtoast.success('文件上传成功');
+            }
+          }
+        })
+        updateParam.filename = filename;
+        updateParam.downloadPath = downloadPath;
+        updateParam.binarySize = binarySize;
+      }
+
       await window.vtoast.loading("修改数据");
       await window.jianghuAxios({
         data: {
           appData: {
-            pageId: 'studentManagement',
+            pageId: 'studentFileManagement',
             actionId: 'updateItem',
-            actionData: data,
-            where: {id}
+            actionData: updateParam,
+            where: { id }
           }
         }
       })
@@ -468,6 +419,7 @@ new Vue({
     },
     async closeUpdateDrawerShow() {
       this.isEditDrawerShow = false;
+      this.updateInputFile = null;
     },
 
     /**
@@ -487,7 +439,7 @@ new Vue({
       await window.jianghuAxios({
         data: {
           appData: {
-            pageId: 'studentManagement',
+            pageId: 'studentFileManagement',
             actionId: 'deleteItem',
             actionData: {},
             where: { id: id }
@@ -497,43 +449,85 @@ new Vue({
       await window.vtoast.success("删除数据成功");
     },
 
-    // 文件预览
-    filePreview({ item }) {
-      this.editItem = item;
-      if (!item.filePath) return;
-      const fileType = item.filePath.split('.');
-      if (fileType[fileType.length - 1] === 'pdf') {
-        this.fileType = 'pdf';
-        this.fileSrc = '/<$ ctx.app.config.appId $>/public/pdf/web/viewer.html?file=' + encodeURIComponent(this.previewPrefix + item.filePath);
-      } else {
-        this.fileType = 'img';
-        this.fileSrc = this.previewPrefix + item.filePath;
-      }
-      this.overlay = true;
+    /** 
+     * uiActionId: downloadFile
+     * description: ✅下载
+     * main:   [{"function":"downloadFile"}]
+     */
+     async downloadFile({ item }) {
+      const itemIndex = this.tableDataFromBackend.findIndex(v => v.fileId === item.fileId);
+      const { fileId, filename, downloadPath } = item;
+      window.vtoast.loading('文件下载进度0.00%');
+      const buffer = await window.jianghuAxios.httpDownloadByStream({ downloadPath, filename, 
+        onProgress: (total, loaded)=> {
+          const progress = Number((loaded * 100 / total).toFixed(2));
+          window.vtoast.loading(`文件下载进度${progress}%`);
+          if (progress === 100) {
+            window.vtoast.success('文件下载成功');
+          }
+        } 
+      });
+      window.jianghuAxios.downloadBufferToChrome({ buffer, filename });
     },
 
-    /**
-     * uiActionId:  downloadFileByStream
-     * description: ✅下载文件
-     * main:   [{"function":"downloadFileByStream"}]
+    /** 
+     * uiActionId: previewFile
+     * description: ✅预览文件
+     * main:   [{"function":"previewFile"}]
+     */
+    async previewFile({ item }) {
+      const { filename, downloadPath, binarySize } = item;
+      if (binarySize > 7 * 1024) {
+        window.vtoast.fail('文件大于7M, 不支持预览!');
+        // 中断uiAction
+        return false;
+      }
+      this.previewFileType = null;
+      if (/\.(gif|jpg|jpeg|png|GIF|JPG|PNG)$/.test(filename)) {
+        this.previewFileType = 'img';
+        this.previewFileUrl = `/<$ ctx.app.config.appId $>/upload${downloadPath}`;
+      }
+      if (/\.(pdf|PDF)$/.test(filename)) {
+        this.previewFileType = 'pdf';
+        this.previewFileUrl = '/<$ ctx.app.config.appId $>/public/pdf/web/viewer.html?file=' + encodeURIComponent(`/<$ ctx.app.config.appId $>/upload${downloadPath}`);
+      }
+      this.previewFilename = filename;
+      this.previewOverlay = true;
+    },
+
+    /** 
+     * uiActionId: downloadPreviewFile
+     * description: ✅下载正在预览的文件
+     * main:   [{"function":"downloadPreviewFile"}]
     */
-    async downloadFileByStream({ item }) {
-      const downloadPath = item.filePath
-      const filename = item.filename || downloadPath.split('/').pop()
-      window.vtoast.loading(`${filename} 下载进度: 0%`);
-      const buffer = await window.jianghuAxios.httpDownloadByStream({
-        downloadPath,
-        filename,
-        onProgress: (total, loaded) => {
-          const progress = Number((loaded * 100 / total).toFixed(2));
-          window.vtoast.loading(`${filename} 下载进度: ${progress}%`);
-          if (total === loaded) {
-            window.vtoast.success("下载完成");
+    async downloadPreviewFile() {
+      const oReq = new XMLHttpRequest();
+      const url = this.previewFileUrl;
+      const filename = this.previewFilename;
+      oReq.open("GET", url, true);
+      oReq.responseType = "arraybuffer";
+      oReq.onprogress = function (event) {
+        if (event.lengthComputable) {
+          const progress = Number((event.loaded * 100 / event.total).toFixed(2));
+          window.vtoast.loading(`文件下载进度${progress}%`);
+          if (progress === 100) {
+            window.vtoast.success('文件下载成功');
           }
         }
-      })
-      window.jianghuAxios.downloadBufferToChrome({ buffer, filename });
-    }
+      }
+      oReq.onload = function (oEvent) {
+        const buffer = oReq.response;
+        let url = window.URL.createObjectURL(new Blob( [buffer], {type: "arraybuffer"}) )
+        const link = document.createElement('a');
+        link.style.display = 'none';
+        link.href = url;
+        link.setAttribute('download', filename);
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      };
+      oReq.send(null); 
+    }, 
   }
 })
 </script>

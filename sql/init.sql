@@ -65,7 +65,7 @@ CREATE TABLE `_file` (
   `operationAt` varchar(255) DEFAULT NULL COMMENT '操作时间; E.g: 2021-05-28T10:24:54+08:00 ',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `fileId_index` (`fileId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 30 COMMENT = '文件表; 软删除未启用;';
+) ENGINE = InnoDB AUTO_INCREMENT = 33 COMMENT = '文件表; 软删除未启用;';
 
 
 
@@ -130,7 +130,7 @@ INSERT INTO `_page` (`id`,`pageId`,`pageFile`,`pageName`,`pageType`,`sort`,`oper
 INSERT INTO `_page` (`id`,`pageId`,`pageFile`,`pageName`,`pageType`,`sort`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (3,'login','loginV3','登陆','','','insert',NULL,NULL,NULL);
 INSERT INTO `_page` (`id`,`pageId`,`pageFile`,`pageName`,`pageType`,`sort`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (6,'manual',NULL,'操作手册','dynamicInMenu','0','insert',NULL,NULL,NULL);
 INSERT INTO `_page` (`id`,`pageId`,`pageFile`,`pageName`,`pageType`,`sort`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (36,'fileManagement',NULL,'文件管理','showInMenu','4','update','vscode','vscode','2022-08-14T11:44:00+08:00');
-INSERT INTO `_page` (`id`,`pageId`,`pageFile`,`pageName`,`pageType`,`sort`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (39,'studentManagement',NULL,'学生管理','showInMenu','5','update','vscode','vscode','2022-08-14T11:44:00+08:00');
+INSERT INTO `_page` (`id`,`pageId`,`pageFile`,`pageName`,`pageType`,`sort`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (39,'studentFileManagement',NULL,'学生文件管理','showInMenu','5','update','vscode','vscode','2022-08-14T11:44:00+08:00');
 
 
 
@@ -152,7 +152,7 @@ CREATE TABLE `_record_history` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `index_record_id` (`recordId`) USING BTREE,
   KEY `index_table_action` (`table`, `operation`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2170 COMMENT = '数据历史表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2175 COMMENT = '数据历史表';
 
 
 
@@ -194,10 +194,10 @@ INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`acti
 INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (337,NULL,NULL,'fileManagement','insertItem','✅文件管理-添加成员','sql','{}','{ \"table\": \"_file\", \"operation\": \"insert\" }','','','insert',NULL,NULL,NULL);
 INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (338,NULL,NULL,'fileManagement','updateItem','✅文件管理-更新成员','sql','{}','{ \"table\": \"_file\", \"operation\": \"jhUpdate\" }','','','insert',NULL,NULL,NULL);
 INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (339,NULL,NULL,'fileManagement','deleteItem','✅文件管理-删除信息','sql','{}','{ \"table\": \"_file\", \"operation\": \"jhDelete\" }','','','insert',NULL,NULL,NULL);
-INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (374,NULL,NULL,'studentManagement','selectItemList','✅studentManagement查询-查询列表','sql','{}','{ \"table\": \"student\", \"operation\": \"select\" }','','','insert',NULL,NULL,NULL);
-INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (375,NULL,NULL,'studentManagement','insertItem','✅studentManagement查询-添加成员','sql','{}','{ \"table\": \"student\", \"operation\": \"insert\" }','','','insert',NULL,NULL,NULL);
-INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (376,NULL,NULL,'studentManagement','updateItem','✅studentManagement查询-更新成员','sql','{}','{ \"table\": \"student\", \"operation\": \"jhUpdate\" }','','','insert',NULL,NULL,NULL);
-INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (377,NULL,NULL,'studentManagement','deleteItem','✅studentManagement查询-删除信息','sql','{}','{ \"table\": \"student\", \"operation\": \"jhDelete\" }','','','insert',NULL,NULL,NULL);
+INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (374,NULL,NULL,'studentFileManagement','selectItemList','✅studentManagement查询-查询列表','sql','{}','{ \"table\": \"student_file\", \"operation\": \"select\" }','','','insert',NULL,NULL,NULL);
+INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (375,NULL,NULL,'studentFileManagement','insertItem','✅studentManagement查询-添加成员','sql','{}','{ \"table\": \"student_file\", \"operation\": \"insert\" }','','','insert',NULL,NULL,NULL);
+INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (376,NULL,NULL,'studentFileManagement','updateItem','✅studentManagement查询-更新成员','sql','{}','{ \"table\": \"student_file\", \"operation\": \"jhUpdate\" }','','','insert',NULL,NULL,NULL);
+INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (377,NULL,NULL,'studentFileManagement','deleteItem','✅studentManagement查询-删除信息','sql','{}','{ \"table\": \"student_file\", \"operation\": \"jhDelete\" }','','','insert',NULL,NULL,NULL);
 INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (378,NULL,NULL,'allPage','uploadFileDone','✅ 文件分片上传-所有分片上传完毕','service','{}','{\"service\": \"file\", \"serviceFunction\": \"uploadFileDone\"}','','','update',NULL,NULL,'2022-05-04T16:02:58+08:00');
 INSERT INTO `_resource` (`id`,`accessControlTable`,`resourceHook`,`pageId`,`actionId`,`desc`,`resourceType`,`appDataSchema`,`resourceData`,`requestDemo`,`responseDemo`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (379,NULL,NULL,'allPage','httpUploadByStream','✅ 文件分片上传-http文件流','service','{}','{\"service\": \"file\", \"serviceFunction\": \"uploadFileChunkByStream\"}','','','update',NULL,NULL,'2022-05-04T16:02:58+08:00');
 
@@ -228,7 +228,7 @@ CREATE TABLE `_resource_request_log` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `resourceId_index` (`resourceId`) USING BTREE,
   KEY `packageId_index` (`packageId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4887 COMMENT = '文件表; 软删除未启用;';
+) ENGINE = InnoDB AUTO_INCREMENT = 4921 COMMENT = '文件表; 软删除未启用;';
 
 
 
@@ -493,7 +493,7 @@ CREATE TABLE `_user_session` (
   KEY `userId_index` (`userId`) USING BTREE,
   KEY `userId_deviceId_index` (`userId`, `deviceId`) USING BTREE,
   KEY `authToken_index` (`authToken`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 28 COMMENT = '用户session表; deviceId 维度;软删除未启用;';
+) ENGINE = InnoDB AUTO_INCREMENT = 29 COMMENT = '用户session表; deviceId 维度;软删除未启用;';
 
 
 
@@ -550,7 +550,7 @@ CREATE TABLE `student` (
   `filePath` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE,
   KEY `studentId` (`studentId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 189;
+) ENGINE = InnoDB AUTO_INCREMENT = 190;
 
 
 # ------------------------------------------------------------
@@ -565,6 +565,36 @@ INSERT INTO `student` (`id`,`studentId`,`name`,`gender`,`dateOfBirth`,`classId`,
 INSERT INTO `student` (`id`,`studentId`,`name`,`gender`,`dateOfBirth`,`classId`,`level`,`bodyHeight`,`studentStatus`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`,`filePath`) VALUES (186,NULL,NULL,NULL,NULL,NULL,NULL,'33',NULL,NULL,'insert','admin','系统管理员','2022-08-31T11:05:13+08:00','/testFile/函数.png');
 INSERT INTO `student` (`id`,`studentId`,`name`,`gender`,`dateOfBirth`,`classId`,`level`,`bodyHeight`,`studentStatus`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`,`filePath`) VALUES (187,NULL,NULL,NULL,NULL,NULL,NULL,'222',NULL,NULL,'insert','admin','系统管理员','2022-08-31T11:08:16+08:00','/testFile/colin.ico');
 INSERT INTO `student` (`id`,`studentId`,`name`,`gender`,`dateOfBirth`,`classId`,`level`,`bodyHeight`,`studentStatus`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`,`filePath`) VALUES (188,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'insert','admin','系统管理员','2022-08-31T13:44:31+08:00','/testFile/函数.png');
+INSERT INTO `student` (`id`,`studentId`,`name`,`gender`,`dateOfBirth`,`classId`,`level`,`bodyHeight`,`studentStatus`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`,`filePath`) VALUES (189,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'insert','admin','系统管理员','2022-09-01T10:56:24+08:00','/testFile/1662000982766_676624_函数.png');
+
+
+
+# ------------------------------------------------------------
+# SCHEMA DUMP FOR TABLE: student_file
+# ------------------------------------------------------------
+
+DROP TABLE IF EXISTS `student_file`;
+CREATE TABLE `student_file` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `downloadPath` varchar(255) DEFAULT NULL COMMENT '文件下载路径',
+  `filename` varchar(255) DEFAULT NULL COMMENT '文件名',
+  `binarySize` varchar(255) DEFAULT NULL COMMENT '文件大小',
+  `studentName` varchar(255) DEFAULT NULL COMMENT '学生名字',
+  `docType` varchar(255) DEFAULT NULL COMMENT '文档类型',
+  `remarks` varchar(255) DEFAULT NULL COMMENT '备注',
+  `operation` varchar(255) DEFAULT 'insert' COMMENT '操作; insert, update, jhInsert, jhUpdate, jhDelete jhRestore',
+  `operationByUserId` varchar(255) DEFAULT NULL COMMENT '操作者userId',
+  `operationByUser` varchar(255) DEFAULT NULL COMMENT '操作者用户名',
+  `operationAt` varchar(255) DEFAULT NULL COMMENT '操作时间; E.g: 2021-05-28T10:24:54+08:00 ',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 195;
+
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: student_file
+# ------------------------------------------------------------
+
+INSERT INTO `student_file` (`id`,`downloadPath`,`filename`,`binarySize`,`studentName`,`docType`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (194,'/testFile/1662107982113_457651_波吉_004.jpeg','波吉_004.jpeg','829.50',NULL,'ll','ll','jhUpdate','admin','系统管理员','2022-09-02T16:39:44+08:00');
 
 
 
