@@ -65,8 +65,18 @@ CREATE TABLE `_file` (
   `operationAt` varchar(255) DEFAULT NULL COMMENT '操作时间; E.g: 2021-05-28T10:24:54+08:00 ',
   PRIMARY KEY (`id`) USING BTREE,
   KEY `fileId_index` (`fileId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 COMMENT = '文件表; 软删除未启用;';
+) ENGINE = InnoDB AUTO_INCREMENT = 35 COMMENT = '文件表; 软删除未启用;';
 
+
+# ------------------------------------------------------------
+# DATA DUMP FOR TABLE: _file
+# ------------------------------------------------------------
+
+INSERT INTO `_file` (`id`,`fileId`,`fileDirectory`,`filename`,`filenameStorage`,`downloadPath`,`fileType`,`fileDesc`,`binarySize`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (30,'1662000982766_676624','testFile','函数.png','1662000982766_676624_函数.png','/testFile/1662000982766_676624_函数.png','学生文件','','4.40','jhInsert','admin','系统管理员','2022-09-01T10:56:22+08:00');
+INSERT INTO `_file` (`id`,`fileId`,`fileDirectory`,`filename`,`filenameStorage`,`downloadPath`,`fileType`,`fileDesc`,`binarySize`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (31,'1662107903584_732309','testFile','波吉_003.jpeg','1662107903584_732309_波吉_003.jpeg','/testFile/1662107903584_732309_波吉_003.jpeg','image/jpeg',NULL,'64.94','jhInsert','admin','系统管理员','2022-09-02T16:38:23+08:00');
+INSERT INTO `_file` (`id`,`fileId`,`fileDirectory`,`filename`,`filenameStorage`,`downloadPath`,`fileType`,`fileDesc`,`binarySize`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (32,'1662107982113_457651','testFile','波吉_004.jpeg','1662107982113_457651_波吉_004.jpeg','/testFile/1662107982113_457651_波吉_004.jpeg','image/jpeg',NULL,'829.50','jhInsert','admin','系统管理员','2022-09-02T16:39:42+08:00');
+INSERT INTO `_file` (`id`,`fileId`,`fileDirectory`,`filename`,`filenameStorage`,`downloadPath`,`fileType`,`fileDesc`,`binarySize`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (33,'1662111648087_114358','testFile','Vineyard.jpg','1662111648087_114358_Vineyard.jpg','/testFile/1662111648087_114358_Vineyard.jpg','image/jpeg',NULL,'417.02','jhInsert','admin','系统管理员','2022-09-02T17:40:48+08:00');
+INSERT INTO `_file` (`id`,`fileId`,`fileDirectory`,`filename`,`filenameStorage`,`downloadPath`,`fileType`,`fileDesc`,`binarySize`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (34,'1662111754684_417052','testFile','未命名的设计 (3).png','1662111754684_417052_未命名的设计 (3).png','/testFile/1662111754684_417052_未命名的设计 (3).png','image/png',NULL,'3921.68','jhInsert','admin','系统管理员','2022-09-02T17:42:34+08:00');
 
 
 
@@ -152,7 +162,7 @@ CREATE TABLE `_record_history` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `index_record_id` (`recordId`) USING BTREE,
   KEY `index_table_action` (`table`, `operation`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2175 COMMENT = '数据历史表';
+) ENGINE = InnoDB AUTO_INCREMENT = 2178 COMMENT = '数据历史表';
 
 
 
@@ -228,7 +238,7 @@ CREATE TABLE `_resource_request_log` (
   PRIMARY KEY (`id`) USING BTREE,
   KEY `resourceId_index` (`resourceId`) USING BTREE,
   KEY `packageId_index` (`packageId`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 4921 COMMENT = '文件表; 软删除未启用;';
+) ENGINE = InnoDB AUTO_INCREMENT = 4950 COMMENT = '文件表; 软删除未启用;';
 
 
 
@@ -493,7 +503,7 @@ CREATE TABLE `_user_session` (
   KEY `userId_index` (`userId`) USING BTREE,
   KEY `userId_deviceId_index` (`userId`, `deviceId`) USING BTREE,
   KEY `authToken_index` (`authToken`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 29 COMMENT = '用户session表; deviceId 维度;软删除未启用;';
+) ENGINE = InnoDB AUTO_INCREMENT = 30 COMMENT = '用户session表; deviceId 维度;软删除未启用;';
 
 
 
@@ -587,7 +597,7 @@ CREATE TABLE `student_file` (
   `operationByUser` varchar(255) DEFAULT NULL COMMENT '操作者用户名',
   `operationAt` varchar(255) DEFAULT NULL COMMENT '操作时间; E.g: 2021-05-28T10:24:54+08:00 ',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 195;
+) ENGINE = InnoDB AUTO_INCREMENT = 197;
 
 
 # ------------------------------------------------------------
@@ -595,6 +605,8 @@ CREATE TABLE `student_file` (
 # ------------------------------------------------------------
 
 INSERT INTO `student_file` (`id`,`downloadPath`,`filename`,`binarySize`,`studentName`,`docType`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (194,'/testFile/1662107982113_457651_波吉_004.jpeg','波吉_004.jpeg','829.50',NULL,'ll','ll','jhUpdate','admin','系统管理员','2022-09-02T16:39:44+08:00');
+INSERT INTO `student_file` (`id`,`downloadPath`,`filename`,`binarySize`,`studentName`,`docType`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (195,'/testFile/1662111648087_114358_Vineyard.jpg','Vineyard.jpg','417.02','mm',NULL,'mm','insert','admin','系统管理员','2022-09-02T17:40:48+08:00');
+INSERT INTO `student_file` (`id`,`downloadPath`,`filename`,`binarySize`,`studentName`,`docType`,`remarks`,`operation`,`operationByUserId`,`operationByUser`,`operationAt`) VALUES (196,'/testFile/1662111754684_417052_未命名的设计 (3).png','未命名的设计 (3).png','3921.68','rr','test','rr','insert','admin','系统管理员','2022-09-02T17:42:34+08:00');
 
 
 
