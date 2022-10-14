@@ -390,7 +390,7 @@ new Vue({
       const { id, docType, studentName, remarks } = this.editItem;
       const updateParam = { docType, studentName, remarks };
       if (this.editInputFile) {
-        const {data: {status, appData: {resultData: { filename, downloadPath, binarySize }}} } = await window.jianghuAxios.httpUploadByStream({ file: this.editInputFile, fileDirectory: 'testFile',
+        const result =  await window.jianghuAxios.httpUploadByStream({ file: this.editInputFile, fileDirectory: 'testFile',
           onProgress: (total, loaded) => {
             let progress = Number((loaded * 100 / total).toFixed(2))
             window.vtoast.loading(`文件上传进度${progress}%`);
@@ -399,6 +399,9 @@ new Vue({
             }
           }
         })
+        const { status } = result.data
+        const { filename, downloadPath, binarySize } = result.data.appData.resultData
+        
         updateParam.filename = filename;
         updateParam.downloadPath = downloadPath;
         updateParam.binarySize = binarySize;
