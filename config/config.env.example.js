@@ -6,8 +6,6 @@ require('dotenv').config({path: path.resolve(__dirname, '../../.env')});
 module.exports = appInfo => {
 
   return {
-    appType: 'multiApp',
-    appDirectoryLink: '/directory',
     static: {
       maxAge: 0,
       buffer: false,
